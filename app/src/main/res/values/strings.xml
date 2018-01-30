@@ -1,0 +1,11 @@
+<resources>
+
+	<!-- Commun -->
+	<string name="app_name">Alarme Broadcast</string>
+
+	<!-- Main -->
+	<string name="main_libelle_bouton">Ajouter réveil</string>
+	<string name="main_message_ajout">Réveil ajouté !</string>
+	<string name="main_message_batterie">Recharger l\'appareil !</string>
+
+</resources>
