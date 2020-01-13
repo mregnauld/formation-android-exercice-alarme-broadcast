@@ -19,12 +19,6 @@
 			</intent-filter>
 		</activity>
 
-		<receiver android:name=".BatterieBroadcastReceiver">
-			<intent-filter>
-				<action android:name="android.intent.action.BATTERY_LOW"/>
-			</intent-filter>
-		</receiver>
-
 	</application>
 
 </manifest>

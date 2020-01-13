@@ -2,21 +2,27 @@ package com.formationandroid.alarmebroadcast;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class MainActivity extends AppCompatActivity
 {
 	
 	// Vues :
 	private TimePicker timePicker = null;
+	
+	// Broadcast receiver :
+	private BatterieBroadcastReceiver batterieBroadcastReceiver = null;
 	
 
 	@Override
@@ -29,6 +35,12 @@ public class MainActivity extends AppCompatActivity
 		// vues :
 		timePicker = findViewById(R.id.timepicker);
 		timePicker.setIs24HourView(true);
+		
+		// broadcast receiver :
+		batterieBroadcastReceiver = new BatterieBroadcastReceiver();
+		
+		// connexion au broadcast receiver :
+		registerReceiver(batterieBroadcastReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
 	}
 	
 	/**
@@ -54,6 +66,32 @@ public class MainActivity extends AppCompatActivity
 		
 		// message de fin :
 		Toast.makeText(this, R.string.main_message_ajout, Toast.LENGTH_LONG).show();
+	}
+	
+	@Override
+	protected void onDestroy()
+	{
+		// init :
+		super.onDestroy();
+		
+		// déconnexion du broadcast receiver :
+		unregisterReceiver(batterieBroadcastReceiver);
+	}
+	
+	
+	/**
+	 * Broadcast receiver pour capter l'événement "niveau de batterie bas".
+	 */
+	public class BatterieBroadcastReceiver extends BroadcastReceiver
+	{
+		
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+			// affichage d'un message si la batterie est presque vide :
+			Toast.makeText(context, R.string.main_message_batterie, Toast.LENGTH_LONG).show();
+		}
+		
 	}
 	
 }
